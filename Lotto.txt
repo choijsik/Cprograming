@@ -1,0 +1,104 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+ char *fname = "lotto.txt";
+ FILE *f;
+ char *fname2 = "win.txt";
+ FILE *g;
+ char *fname3 = "fail.txt";
+ FILE *h;
+ char *fname4 = "result.txt";
+ FILE *k;
+ int i, j, a[6]={3, 13, 23, 33, 43, 45}, b[6], count=0, n=0;
+ if((f=fopen(fname, "w")) == NULL)
+ {
+  printf("파일이 열리지 않습니다.\n");
+  exit(1);
+ }
+ for(i=0; i<6; i++)
+ {
+  fprintf(f, "%d\n", a[i]);
+ }
+ fclose(f);
+ 
+ if((k=fopen(fname4, "w")) == NULL)
+ {
+  printf("파일이 열리지 않습니다.\n");
+  exit(1);
+ }
+ while(n==10000)
+ {
+ for(i=0; i<6; i++)
+ {
+  b[i]=rand()%45 + 1;
+ }
+ 
+ for(i=0; i<6; i++)
+ {
+  for(j=0; j<6; j++)
+  {
+            if(a[i] == b[j])
+   {
+    count++;
+   }
+  }
+ }
+ if(count>=3)
+ {
+    if((g=fopen(fname2, "a")) == NULL)
+    {
+     printf("파일이 열리지 않습니다.\n");
+     exit(1);
+    }
+    for(j=0; j<6; j++)
+    {
+        fprintf(g, "%d ", b[j]);
+    }  
+    switch(count)
+    {
+    case 3:
+     fprintf(g, "%d번째, 4등, %d, %d, %d, %d, %d, %d", n, b[0], b[1], b[2], b[3], b[4], b[5]);
+        printf("%d번째, 4등, %d, %d, %d, %d, %d, %d", n, b[0], b[1], b[2], b[3], b[4], b[5]);
+        n=n+1;
+        break;
+    case 4:
+     fprintf(g, "%d번째, 3등, %d, %d, %d, %d, %d, %d", n, b[0], b[1], b[2], b[3], b[4], b[5]);
+     printf("%d번째, 3등, %d, %d, %d, %d, %d, %d", n, b[0], b[1], b[2], b[3], b[4], b[5]);
+     n=n+1;
+     break;
+       case 5:
+     fprintf(g, "%d번째, 2등, %d, %d, %d, %d, %d, %d", n, b[0], b[1], b[2], b[3], b[4], b[5]);
+     printf("%d번째, 2등, %d, %d, %d, %d, %d, %d", n, b[0], b[1], b[2], b[3], b[4], b[5]);
+     n=n+1;
+     break;
+    case 6:
+     fprintf(g, "%d번째, 1등, %d, %d, %d, %d, %d, %d", n, b[0], b[1], b[2], b[3], b[4], b[5]);
+     printf("%d번째, 1등, %d, %d, %d, %d, %d, %d", n, b[0], b[1], b[2], b[3], b[4], b[5]);
+     n=n+1;
+     break;
+    }
+    fclose(g);
+ }
+    else
+ {
+    if((g=fopen(fname2, "a")) == NULL)
+    {
+     printf("파일이 열리지 않습니다.\n");
+     exit(1);
+    }
+    for(j=0; j<6; j++)
+    {
+     fprintf(h, "%d ", b[j]);
+    }
+    fprintf(h, "%d번째, 꽝, %d, %d, %d, %d, %d, %d", n, b[0], b[1], b[2], b[3], b[4], b[5]);
+    printf("%d번째, 꽝, %d, %d, %d, %d, %d, %d", n, b[0], b[1], b[2], b[3], b[4], b[5]);
+    n=n+1;
+    fclose(h);
+ }
+ }
+ fclose(k);
+ return 0;
+} 
